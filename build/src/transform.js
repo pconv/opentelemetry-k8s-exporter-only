@@ -25,7 +25,6 @@ const OPENTELEMETRY_TASK_DESCRIPTION = 'OpenTelemetry task identifier';
 exports.OPENTELEMETRY_TASK_VALUE_DEFAULT = generateDefaultTaskValue();
 const STACKDRIVER_PROJECT_ID_KEY = 'project_id';
 const GCP_GKE_INSTANCE = 'k8s_container';
-const consts_1 = require("./consts");
 function transformMetricDescriptor(metricDescriptor, metricPrefix, displayNamePrefix) {
     return {
         type: transformMetricType(metricPrefix, metricDescriptor.name),
@@ -103,11 +102,7 @@ function k8sorMapOtelResourceSelector(resource, projectId) {
             type: GCP_GKE_INSTANCE,
             labels: {
                 project_id: projectId,
-                location: consts_1.CLOUD_RESOURCE.ZONE_KEY,
-                cluster_name: consts_1.K8S_RESOURCE.CLUSTER_NAME_KEY,
-                namespace_name: consts_1.K8S_RESOURCE.NAMESPACE_NAME_KEY,
-                pod_name: consts_1.K8S_RESOURCE.POD_NAME_KEY,
-                container_name: consts_1.CONTAINER_RESOURCE.NAME_KEY,
+                ...resource.attributes,
             },
         };
         console.log('gke', gke);
