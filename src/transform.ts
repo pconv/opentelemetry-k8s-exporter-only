@@ -141,13 +141,10 @@ function k8sorMapOtelResourceSelector(
       type: GCP_GKE_INSTANCE,
       labels: {
         project_id: projectId,
-        pod_name: String(resource.attributes.pod_name),
-        container_name: String(resource.attributes.container_name),
-        cluster_name: String(resource.attributes.cluster_name),
-        location: String(resource.attributes.location),
-        namespace_name: String(resource.attributes.namespace_name),
+        ...resource.attributes,
       },
     };
+    console.log('a-labels', resource.attributes.labels);
     console.log('gke', gke);
     return gke;
   } else {
