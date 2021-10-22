@@ -21,7 +21,10 @@ import {
   PointValueType,
 } from '@opentelemetry/sdk-metrics-base';
 import {ValueType as OTValueType} from '@opentelemetry/api-metrics';
-import {mapOtelResourceToMonitoredResource, MonitoredResource} from '@google-cloud/opentelemetry-resource-util';
+import {
+  mapOtelResourceToMonitoredResource,
+  MonitoredResource,
+} from '@google-cloud/opentelemetry-resource-util';
 import {
   MetricDescriptor,
   MetricKind,
@@ -32,14 +35,13 @@ import {
 import * as path from 'path';
 import * as os from 'os';
 import type {monitoring_v3} from 'googleapis';
-import { Resource } from '@opentelemetry/resources';
-
+import {Resource} from '@opentelemetry/resources';
 
 const OPENTELEMETRY_TASK = 'opentelemetry_task';
 const OPENTELEMETRY_TASK_DESCRIPTION = 'OpenTelemetry task identifier';
 export const OPENTELEMETRY_TASK_VALUE_DEFAULT = generateDefaultTaskValue();
 const STACKDRIVER_PROJECT_ID_KEY = 'project_id';
-const GCP_GKE_INSTANCE = "k8s_container";
+const GCP_GKE_INSTANCE = 'k8s_container';
 
 import {
   CLOUD_RESOURCE,
@@ -128,27 +130,27 @@ export function createTimeSeries(
   };
 }
 
-function k8sorMapOtelResourceSelector(resource: Resource, projectId: string): MonitoredResource{
-
-  if(resource.attributes.type === GCP_GKE_INSTANCE){
-    console.log('gke')
-    return {
+function k8sorMapOtelResourceSelector(
+  resource: Resource,
+  projectId: string
+): MonitoredResource {
+  if (resource.attributes.type === GCP_GKE_INSTANCE) {
+    const gke: MonitoredResource = {
       type: GCP_GKE_INSTANCE,
       labels: {
-        project_id: STACKDRIVER_PROJECT_ID_KEY,
+        project_id: projectId,
         location: CLOUD_RESOURCE.ZONE_KEY,
         cluster_name: K8S_RESOURCE.CLUSTER_NAME_KEY,
         namespace_name: K8S_RESOURCE.NAMESPACE_NAME_KEY,
         pod_name: K8S_RESOURCE.POD_NAME_KEY,
         container_name: CONTAINER_RESOURCE.NAME_KEY,
-      }
-    }
-
-  }else{
-    return mapOtelResourceToMonitoredResource(resource, projectId)
+      },
+    };
+    console.log('gke', gke);
+    return gke;
+  } else {
+    return mapOtelResourceToMonitoredResource(resource, projectId);
   }
-
- 
 }
 
 function transformMetric(
