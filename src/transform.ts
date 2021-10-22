@@ -119,7 +119,7 @@ export function createTimeSeries(
   startTime: string,
   projectId: string
 ): TimeSeries {
-  return {
+  const timeSeries = {
     metric: transformMetric(metric, metricPrefix),
     resource: k8sorMapOtelResourceSelector(metric.resource, projectId),
     metricKind: transformMetricKind(metric.descriptor.metricKind),
@@ -128,6 +128,8 @@ export function createTimeSeries(
       transformPoint(metric.aggregator.toPoint(), metric.descriptor, startTime),
     ],
   };
+  console.log('time series', timeSeries);
+  return timeSeries;
 }
 
 function k8sorMapOtelResourceSelector(

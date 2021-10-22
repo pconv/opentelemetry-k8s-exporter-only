@@ -84,7 +84,7 @@ function transformValueType(valueType) {
  * uploaded to StackDriver.
  */
 function createTimeSeries(metric, metricPrefix, startTime, projectId) {
-    return {
+    const timeSeries = {
         metric: transformMetric(metric, metricPrefix),
         resource: k8sorMapOtelResourceSelector(metric.resource, projectId),
         metricKind: transformMetricKind(metric.descriptor.metricKind),
@@ -93,6 +93,8 @@ function createTimeSeries(metric, metricPrefix, startTime, projectId) {
             transformPoint(metric.aggregator.toPoint(), metric.descriptor, startTime),
         ],
     };
+    console.log('time series', timeSeries);
+    return timeSeries;
 }
 exports.createTimeSeries = createTimeSeries;
 function k8sorMapOtelResourceSelector(resource, projectId) {
