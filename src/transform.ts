@@ -141,11 +141,7 @@ function k8sorMapOtelResourceSelector(
       type: GCP_GKE_INSTANCE,
       labels: {
         project_id: projectId,
-        location: CLOUD_RESOURCE.ZONE_KEY,
-        cluster_name: K8S_RESOURCE.CLUSTER_NAME_KEY,
-        namespace_name: K8S_RESOURCE.NAMESPACE_NAME_KEY,
-        pod_name: K8S_RESOURCE.POD_NAME_KEY,
-        container_name: CONTAINER_RESOURCE.NAME_KEY,
+        ...resource.attributes,
       },
     };
     console.log('gke', gke);
