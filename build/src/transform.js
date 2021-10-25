@@ -23,7 +23,6 @@ const os = require("os");
 const OPENTELEMETRY_TASK = 'opentelemetry_task';
 const OPENTELEMETRY_TASK_DESCRIPTION = 'OpenTelemetry task identifier';
 exports.OPENTELEMETRY_TASK_VALUE_DEFAULT = generateDefaultTaskValue();
-const STACKDRIVER_PROJECT_ID_KEY = 'project_id';
 const GCP_GKE_INSTANCE = 'k8s_container';
 function transformMetricDescriptor(metricDescriptor, metricPrefix, displayNamePrefix) {
     return {
@@ -92,7 +91,7 @@ function createTimeSeries(metric, metricPrefix, startTime, projectId) {
             transformPoint(metric.aggregator.toPoint(), metric.descriptor, startTime),
         ],
     };
-    // console.log('time series', timeSeries);
+    console.log('time series', timeSeries);
     return timeSeries;
 }
 exports.createTimeSeries = createTimeSeries;
@@ -102,11 +101,16 @@ function k8sorMapOtelResourceSelector(resource, projectId) {
             type: GCP_GKE_INSTANCE,
             labels: {
                 project_id: projectId,
-                ...resource.attributes,
+                // ...resource.attributes,
+                pod_name: String(resource.attributes.pod_name),
+                container_name: String(resource.attributes.container_name),
+                cluster_name: String(resource.attributes.cluster_name),
+                location: String(resource.attributes.location),
+                namespace_name: String(resource.attributes.namespace_name),
             },
         };
-        // console.log('a-labels', resource.attributes.labels);
-        // console.log('gke', gke);
+        console.log('a-labels', resource.attributes.labels);
+        console.log('gke', gke);
         return gke;
     }
     else {
