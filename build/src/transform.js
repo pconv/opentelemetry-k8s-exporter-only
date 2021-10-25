@@ -118,11 +118,20 @@ function k8sorMapOtelResourceSelector(resource, projectId) {
     }
 }
 function transformMetric(metric, metricPrefix) {
-    const type = transformMetricType(metricPrefix, metric.descriptor.name);
-    const labels = {};
-    Object.keys(metric.labels).forEach(key => (labels[key] = `${metric.labels[key]}`));
-    labels[OPENTELEMETRY_TASK] = exports.OPENTELEMETRY_TASK_VALUE_DEFAULT;
-    return { type, labels };
+    console.log('transform', metric);
+    try {
+        const type = transformMetricType(metricPrefix, metric.descriptor.name);
+        const labels = {};
+        Object.keys(metric.labels).forEach(key => (labels[key] = `${metric.labels[key]}`));
+        labels[OPENTELEMETRY_TASK] = exports.OPENTELEMETRY_TASK_VALUE_DEFAULT;
+        return { type, labels };
+    }
+    catch (error) {
+        console.log('error', error);
+        const labels = {};
+        const type = 'hi';
+        return { type, labels };
+    }
 }
 /**
  * Transform timeseries's point, so that metric can be uploaded to StackDriver.
