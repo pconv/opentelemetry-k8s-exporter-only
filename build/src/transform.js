@@ -92,7 +92,7 @@ function createTimeSeries(metric, metricPrefix, startTime, projectId) {
             transformPoint(metric.aggregator.toPoint(), metric.descriptor, startTime),
         ],
     };
-    console.log('time series', timeSeries);
+    // console.log('time series', timeSeries);
     return timeSeries;
 }
 exports.createTimeSeries = createTimeSeries;
@@ -105,8 +105,8 @@ function k8sorMapOtelResourceSelector(resource, projectId) {
                 ...resource.attributes,
             },
         };
-        console.log('a-labels', resource.attributes.labels);
-        console.log('gke', gke);
+        // console.log('a-labels', resource.attributes.labels);
+        // console.log('gke', gke);
         return gke;
     }
     else {

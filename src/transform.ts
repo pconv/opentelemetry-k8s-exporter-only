@@ -128,7 +128,7 @@ export function createTimeSeries(
       transformPoint(metric.aggregator.toPoint(), metric.descriptor, startTime),
     ],
   };
-  console.log('time series', timeSeries);
+  // console.log('time series', timeSeries);
   return timeSeries;
 }
 
@@ -144,8 +144,8 @@ function k8sorMapOtelResourceSelector(
         ...resource.attributes,
       },
     };
-    console.log('a-labels', resource.attributes.labels);
-    console.log('gke', gke);
+    // console.log('a-labels', resource.attributes.labels);
+    // console.log('gke', gke);
     return gke;
   } else {
     return mapOtelResourceToMonitoredResource(resource, projectId);
