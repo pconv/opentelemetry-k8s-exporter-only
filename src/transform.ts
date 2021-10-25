@@ -120,7 +120,7 @@ export function createTimeSeries(
       transformPoint(metric.aggregator.toPoint(), metric.descriptor, startTime),
     ],
   };
-  console.log('time series', timeSeries);
+  // console.log('time series', timeSeries);
   return timeSeries;
 }
 
@@ -141,8 +141,8 @@ function k8sorMapOtelResourceSelector(
         namespace_name: String(resource.attributes.namespace_name),
       },
     };
-    console.log('a-labels', resource.attributes.labels);
-    console.log('gke', gke);
+    // console.log('a-labels', resource.attributes.labels);
+    // console.log('gke', gke);
     return gke;
   } else {
     return mapOtelResourceToMonitoredResource(resource, projectId);
@@ -153,22 +153,14 @@ function transformMetric(
   metric: MetricRecord,
   metricPrefix: string
 ): {type: string; labels: {[key: string]: string}} {
-  console.log('transform', metric);
-  try {
-    const type = transformMetricType(metricPrefix, metric.descriptor.name);
-    const labels: {[key: string]: string} = {};
+  const type = transformMetricType(metricPrefix, metric.descriptor.name);
+  const labels: {[key: string]: string} = {};
 
-    Object.keys(metric.labels).forEach(
-      key => (labels[key] = `${metric.labels[key]}`)
-    );
-    labels[OPENTELEMETRY_TASK] = OPENTELEMETRY_TASK_VALUE_DEFAULT;
-    return {type, labels};
-  } catch (error) {
-    console.log('error', error);
-    const labels: {[key: string]: string} = {};
-    const type = 'hi';
-    return {type, labels};
-  }
+  Object.keys(metric.labels).forEach(
+    key => (labels[key] = `${metric.labels[key]}`)
+  );
+  labels[OPENTELEMETRY_TASK] = OPENTELEMETRY_TASK_VALUE_DEFAULT;
+  return {type, labels};
 }
 
 /**

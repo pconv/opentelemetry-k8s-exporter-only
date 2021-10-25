@@ -91,7 +91,7 @@ function createTimeSeries(metric, metricPrefix, startTime, projectId) {
             transformPoint(metric.aggregator.toPoint(), metric.descriptor, startTime),
         ],
     };
-    console.log('time series', timeSeries);
+    // console.log('time series', timeSeries);
     return timeSeries;
 }
 exports.createTimeSeries = createTimeSeries;
@@ -109,8 +109,8 @@ function k8sorMapOtelResourceSelector(resource, projectId) {
                 namespace_name: String(resource.attributes.namespace_name),
             },
         };
-        console.log('a-labels', resource.attributes.labels);
-        console.log('gke', gke);
+        // console.log('a-labels', resource.attributes.labels);
+        // console.log('gke', gke);
         return gke;
     }
     else {
@@ -118,20 +118,11 @@ function k8sorMapOtelResourceSelector(resource, projectId) {
     }
 }
 function transformMetric(metric, metricPrefix) {
-    console.log('transform', metric);
-    try {
-        const type = transformMetricType(metricPrefix, metric.descriptor.name);
-        const labels = {};
-        Object.keys(metric.labels).forEach(key => (labels[key] = `${metric.labels[key]}`));
-        labels[OPENTELEMETRY_TASK] = exports.OPENTELEMETRY_TASK_VALUE_DEFAULT;
-        return { type, labels };
-    }
-    catch (error) {
-        console.log('error', error);
-        const labels = {};
-        const type = 'hi';
-        return { type, labels };
-    }
+    const type = transformMetricType(metricPrefix, metric.descriptor.name);
+    const labels = {};
+    Object.keys(metric.labels).forEach(key => (labels[key] = `${metric.labels[key]}`));
+    labels[OPENTELEMETRY_TASK] = exports.OPENTELEMETRY_TASK_VALUE_DEFAULT;
+    return { type, labels };
 }
 /**
  * Transform timeseries's point, so that metric can be uploaded to StackDriver.
