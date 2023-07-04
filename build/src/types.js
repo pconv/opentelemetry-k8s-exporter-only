@@ -23,7 +23,7 @@ var MetricKind;
     MetricKind["GAUGE"] = "GAUGE";
     MetricKind["DELTA"] = "DELTA";
     MetricKind["CUMULATIVE"] = "CUMULATIVE";
-})(MetricKind = exports.MetricKind || (exports.MetricKind = {}));
+})(MetricKind || (exports.MetricKind = MetricKind = {}));
 /** The value type of a metric. */
 var ValueType;
 (function (ValueType) {
@@ -31,5 +31,5 @@ var ValueType;
     ValueType["INT64"] = "INT64";
     ValueType["DOUBLE"] = "DOUBLE";
     ValueType["DISTRIBUTION"] = "DISTRIBUTION";
-})(ValueType = exports.ValueType || (exports.ValueType = {}));
+})(ValueType || (exports.ValueType = ValueType = {}));
 //# sourceMappingURL=types.js.map

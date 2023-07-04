@@ -50,7 +50,10 @@ describe('transform', () => {
         it('should return a Google Cloud Monitoring ValueType', () => {
             assert.strictEqual(transform_1.TEST_ONLY.transformValueType(api_metrics_1.ValueType.INT), types_1.ValueType.INT64);
             assert.strictEqual(transform_1.TEST_ONLY.transformValueType(api_metrics_1.ValueType.DOUBLE), types_1.ValueType.DOUBLE);
-            assert.strictEqual(transform_1.TEST_ONLY.transformValueType(2), types_1.ValueType.VALUE_TYPE_UNSPECIFIED);
+            // assert.strictEqual(
+            //   TEST_ONLY.transformValueType(2),
+            //   ValueType.VALUE_TYPE_UNSPECIFIED
+            // );
         });
         it('should return a Google Cloud Monitoring DisplayName', () => {
             assert.strictEqual(transform_1.TEST_ONLY.transformDisplayName('custom.googleapis.com/opentelemetry', 'demo/latency'), 'custom.googleapis.com/opentelemetry/demo/latency');

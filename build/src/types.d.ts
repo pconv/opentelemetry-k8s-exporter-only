@@ -64,7 +64,7 @@ export interface Point extends monitoring_v3.Schema$Point {
         startTime?: string;
     };
 }
-export declare type Bucket = number;
+export type Bucket = number;
 /**
  * Exemplars are example points that may be used to annotate aggregated
  * Distribution values. They are metadata that gives information about a
